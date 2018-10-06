@@ -151,10 +151,6 @@ sub patch($$) {
     }
 }
 
-=head1 LIMITATIONS
-
-Struct::Path will fail on structures with loops in references.
-
 =head1 AUTHOR
 
 Michael Samoglyadov, C<< <mixas at cpan.org> >>
