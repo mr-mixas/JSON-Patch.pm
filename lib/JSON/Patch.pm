@@ -143,7 +143,7 @@ sub patch($$) {
             my @found = path($_[0], $path, deref => 1) or
                 croak "Path does not exist";
             my $diff = Struct::Diff::diff($found[0], $hunk->{value}, noU => 1);
-            croak "Test failed" if (keys $diff);
+            croak "Test failed" if (keys %{$diff});
 
         } else {
             croak "Unsupported op '$hunk->{op}'";
