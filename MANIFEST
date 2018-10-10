@@ -9,6 +9,4 @@ t/manifest.t
 t/pod-coverage.t
 t/pod.t
 t/synopsis.t
-t/xt-diff.t
-t/xt-patch.t
 xt/Makefile
