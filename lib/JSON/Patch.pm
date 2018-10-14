@@ -17,8 +17,7 @@ our @EXPORT_OK = qw(
 
 =head1 NAME
 
-JSON::Patch - JSON Patch (L<rfc6902|https://tools.ietf.org/html/rfc6902>) for
-perl structures
+JSON::Patch - JSON Patch (rfc6902) for perl structures
 
 =begin html
 
@@ -190,6 +189,11 @@ L<http://cpanratings.perl.org/d/JSON-Patch>
 L<http://search.cpan.org/dist/JSON-Patch/>
 
 =back
+
+=head1 SEE ALSO
+
+L<rfc6902|https://tools.ietf.org/html/rfc6902>
+L<Struct::Diff>, L<Struct::Diff::MergePatch>
 
 =head1 LICENSE AND COPYRIGHT
 
