@@ -102,7 +102,10 @@ Apply patch.
 =cut
 
 sub patch($$) {
+    croak "Arrayref expected for patch" unless (ref $_[1] eq 'ARRAY');
+
     for my $hunk (@{$_[1]}) {
+        croak "Hashref expected for patch item" unless (ref $hunk eq 'HASH');
         croak "Undefined op value" unless (defined $hunk->{op});
         croak "Path parameter missing" unless (exists $hunk->{path});
 
