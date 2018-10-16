@@ -62,15 +62,21 @@ Nothing is exported by default.
 
 =head2 diff
 
-Calculate patch.
+Calculate patch for two arguments:
 
     $patch = diff($old, $new);
+
+Convert L<Struct::Diff> diff to JSON Patch when single arg passed:
+
+    require Struct::Diff;
+    $patch = diff(Struct::Diff::diff($old, $new));
 
 =cut
 
 sub diff($$) {
-    my @stask = Struct::Diff::list_diff
-        Struct::Diff::diff($_[0], $_[1], noO => 1, noU => 1, trimR => 1);
+    my @stask = Struct::Diff::list_diff @_ == 2
+        ? Struct::Diff::diff($_[0], $_[1], noO => 1, noU => 1, trimR => 1)
+        : $_[0];
 
     my ($hunk, @patch, $path);
 
@@ -101,7 +107,7 @@ Apply patch.
 
 =cut
 
-sub patch($$) {
+sub patch($;$) {
     croak "Arrayref expected for patch" unless (ref $_[1] eq 'ARRAY');
 
     for my $hunk (@{$_[1]}) {
@@ -195,7 +201,7 @@ L<http://search.cpan.org/dist/JSON-Patch/>
 
 =head1 SEE ALSO
 
-L<rfc6902|https://tools.ietf.org/html/rfc6902>
+L<rfc6902|https://tools.ietf.org/html/rfc6902>,
 L<Struct::Diff>, L<Struct::Diff::MergePatch>
 
 =head1 LICENSE AND COPYRIGHT
