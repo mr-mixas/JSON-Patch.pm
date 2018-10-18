@@ -3,6 +3,8 @@
 use strict;
 use warnings FATAL => 'all';
 
+use File::Spec::Functions qw(catfile);
+use HTTP::Tiny;
 use JSON;
 use JSON::Patch qw(diff patch);
 use Test::More;
@@ -66,7 +68,27 @@ sub run_patch_tests {
 }
 
 
-my @test_files = grep { -e } qw(xt/spec_tests.json xt/tests.json);
+my %FILES = (
+    'spec_tests.json' => 'http://raw.githubusercontent.com/json-patch/json-patch-tests/master/spec_tests.json',
+    'tests.json'      => 'http://raw.githubusercontent.com/json-patch/json-patch-tests/master/tests.json',
+);
+
+if ($ENV{FETCH_EXTERNAL_TESTS}) {
+    for my $file (sort keys %FILES) {
+        diag "Fetching $FILES{$file}";
+
+        my $resp = HTTP::Tiny->new->get($FILES{$file});
+        die "Unable to fetch test file: $resp->{status} $resp->{reason}"
+            unless ($resp->{success});
+
+        open(my $fh, '>', catfile("xt", $file)) or
+            die "Failed to open file '$file' ($!)";
+        print $fh $resp->{content};
+        close($fh);
+    }
+}
+
+my @test_files = grep { -e } map { catfile("xt", $_) } sort keys %FILES;
 
 unless (@test_files) {
     plan skip_all => 'Tests files unavailable';
