@@ -10,4 +10,4 @@ t/manifest.t
 t/pod-coverage.t
 t/pod.t
 t/synopsis.t
-xt/Makefile
+xt/json-patch-tests.t
