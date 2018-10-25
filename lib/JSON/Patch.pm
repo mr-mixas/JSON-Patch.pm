@@ -74,9 +74,10 @@ Convert L<Struct::Diff> diff to JSON Patch when single arg passed:
 =cut
 
 sub diff($;$) {
-    my @stask = Struct::Diff::list_diff @_ == 2
+    my $diff = @_ == 2
         ? Struct::Diff::diff($_[0], $_[1], noO => 1, noU => 1, trimR => 1)
         : $_[0];
+    my @stask = Struct::Diff::list_diff($diff, sort => 1);
 
     my ($hunk, @patch, $path);
 
