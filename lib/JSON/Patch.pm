@@ -73,7 +73,7 @@ Convert L<Struct::Diff> diff to JSON Patch when single arg passed:
 
 =cut
 
-sub diff($$) {
+sub diff($;$) {
     my @stask = Struct::Diff::list_diff @_ == 2
         ? Struct::Diff::diff($_[0], $_[1], noO => 1, noU => 1, trimR => 1)
         : $_[0];
@@ -107,7 +107,7 @@ Apply patch.
 
 =cut
 
-sub patch($;$) {
+sub patch($$) {
     croak "Arrayref expected for patch" unless (ref $_[1] eq 'ARRAY');
 
     for my $hunk (@{$_[1]}) {
